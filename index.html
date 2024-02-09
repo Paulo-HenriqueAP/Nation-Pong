@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/css/estilos.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="src/icon.ico">
+    <title>Nation Pong</title>
+</head>
+
+<body>
+    <div id="startMenu">
+        <p id="chooseTeam">PLAYER 1</p>
+        <button id="top0" onclick="goTop()">⇑</button>
+    </div>
+
+    <span id="iTake"></span>
+    <div id="gameContainer" class="hidden">
+        <canvas id="gameBoard" width="500px" height="500px"></canvas>
+        <span id="line">|</span>
+        <span id="score1">0</span>
+        <span id="score2">0</span>
+        <br>
+        <button id="pausetBtn" onclick="pauseGame()">Menu</button>
+    </div>
+
+    <div id="pauseMenu" class="hidden">
+        <li><button onmousedown="functionsFromMenu(event)" id="CONTINUE">CONTINUE</button></li>
+        <li><button onmousedown="functionsFromMenu(event)" id="RESTART">RESTART</button></li>
+        <li><button onmousedown="functionsFromMenu(event)" id="TEAMS">TEAMS</button></li>
+        <li><button onmousedown="functionsFromMenu(event)" id="MOBILE">MOBILE</button></li>
+        <li id="languagesText">
+            <span id="LANGUAGES">LANGUAGE:</span>
+            <span onmousedown="functionsFromMenu(event)" id="br">BR</span>
+            <span onmousedown="functionsFromMenu(event)" id="en">EN</span>
+        </li>
+        <li><button onmousedown="functionsFromMenu(event)" id="HELP">HELP</button></li>
+        <div id="help" class="hidden">
+        </div>
+        <li><button onmousedown="functionsFromMenu(event)" id="WALLmode">WALL MODE</button></li>
+
+        <li id="boardCList">
+            <span id="boardColor">BOARD</span>
+            <br>
+            <span onmousedown="functionsFromMenu(event)" id="greB">⎚</span>
+            <span onmousedown="functionsFromMenu(event)" id="whiB">⎚</span>
+            <span onmousedown="functionsFromMenu(event)" id="redB">⎚</span>
+            <span onmousedown="functionsFromMenu(event)" id="blaB">⎚</span>
+            <span onmousedown="functionsFromMenu(event)" id="oraB">⎚</span>
+            <span onmousedown="functionsFromMenu(event)" id="purB">⎚</span>
+            <span onmousedown="functionsFromMenu(event)" id="ranB">⎚</span>
+        </li>
+        <button
+            style="width: max-content; background-color:#333; left: 0; position: fixed; border: none; font-size: small;"
+            onmousedown="functionsFromMenu(event)" id="soundVolume">🔊</button>
+        <button onmousedown="functionsFromMenu(event)" id="CREDITS">credits</button>
+
+    </div>
+
+
+    <div id="mobileControls" class="hidden">
+        <button id="mobUP" onmousedown="changeDirectionMobile(event)">↑</button>
+        <button id="mobDW" onmousedown="changeDirectionMobile(event)">↓</button>
+        <button id="mobUP2" onmousedown="changeDirectionMobile(event)">↑</button>
+        <button id="mobDW2" onmousedown="changeDirectionMobile(event)">↓</button>
+    </div>
+</body>
+
+<script src="src/js/index.js"></script>
+
+</html>
