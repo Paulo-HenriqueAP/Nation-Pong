@@ -1,62 +1,7 @@
 const userLanguage = window.navigator.userLanguage || window.navigator.language;
 
-const teams = [
-    "rd",
-    "AD", "AE", "AF", "AG", "AI",
-    "AL", "AM", "AO", "AQ", "AR",
-    "AS", "AT", "AU", "AW", "AX",
-    "AZ", "BA", "BB", "BD", "BE",
-    "BF", "BG", "BH", "BI", "BJ",
-    /*BL*/, "BM", "BN", "BO", "BQ",
-    "BR", "BS", "BT", "BV", "BW",
-    "BY", "BZ", "CA", "CC", "CD",
-    "CF", "CG", "CH", "CI", "CK",
-    "CL", "CM", "CN", "CO", "CR",
-    "CU", "CV", "CW", "CX", "CY",
-    "CZ", "DE", "DJ", "DK", "DM",
-    "DO", "DZ", "EC", "EE", "EG",
-    "EH", "ER", "ES", "ET", "EU",
-    "FI", "FJ", "FK", "FM", "FO",
-    "FR", "GA", "GB-ENG", /*GB-NIR*/, "GB-SCT",
-    "GB-WLS", "GB", "GD", "GE",/*GF*/,
-    "GG", "GH", "GI", "GL", "GM",
-    "GN", /*GP*/, "GQ", "GR", "GS",
-    "GT", "GU", "GW", "GY", "HK",
-    "HM", "HN", "HR", "HT", "HU",
-    "ID", "IE", "IL", "IM", "IN",
-    "IO", "IQ", "IR", "IS", "IT",
-    "JE", "JM", "JO", "JP", "KE",
-    "KG", "KH", "KI", "KM", "KN",
-    "KP", "KR", "KW", "KY", "KZ",
-    "LA", "LB", "LC", "LI", "LK",
-    "LR", "LS", "LT", "LU", "LV",
-    "LY", "MA", "MC", "MD", "ME",
-    /*MF*/, "MG", "MH", "MK", "ML",
-    "MM", "MN", "MO", "MP", /*MQ*/,
-    "MR", "MS", "MT", "MU", "MV",
-    "MW", "MX", "MY", "MZ", "NA",
-    /*NC*/, "NE", "NF", "NG", "NI",
-    "NL", "NO", "NP", "NR", "NU",
-    "NZ", "OM", "PA", "PE", "PF",
-    "PG", "PH", "PK", "PL", /*PM*/,
-    "PN", "PR", "PS", "PT", "PW",
-    "PY", "QA", /*RE*/, "RO", "RS",
-    "RU", "RW", "SA", "SB", "SC",
-    "SD", "SE", "SG", "SH", "SI",
-    "SJ", "SK", "SL", "SM", "SN",
-    "SO", "SR", "SS", "ST", "SV",
-    "SX", "SY", "SZ", "TC", "TD",
-    "TF", "TG", "TH", "TJ", "TK",
-    "TL", "TM", "TN", "TO", "TR",
-    "TT", "TV", "TW", "TZ", "UA",
-    "UG", /*UM*/, "US", "UY", "UZ",
-    "VA", "VC", "VE", "VG", "VI",
-    "VN", "VU", "WF", "WS", "XK",
-    "YE", /*"YT"*/, "ZA", "ZM", "ZW"
-];//tks https://github.com/hampusborgos/country-flags
-
 let nameFlags = {
-    "rd": { "en": "Random", "lanBR": "Aleatório" },
+    "RD": { "en": "Random", "lanBR": "Aleatório" },
     "AD": { "en": "Andorra", "lanBR": "Andorra" },
     "AE": { "en": "United Arab Emirates", "lanBR": "Emirados Árabes Unidos" },
     "AF": { "en": "Afghanistan", "lanBR": "Afeganistão" },
@@ -311,23 +256,22 @@ let nameFlags = {
     "ZA": { "en": "South Africa", "lanBR": "África do Sul" },
     "ZM": { "en": "Zambia", "lanBR": "Zâmbia" },
     "ZW": { "en": "Zimbabwe", "lanBR": "Zimbábue" }
-};
+};//tks https://github.com/hampusborgos/country-flags
 
 const hitSound = new Audio("src/hit.wav");
 const hitNoScoreSound = new Audio("src/hitNoScore.wav");
-hitNoScoreSound.volume = 0.3;
 const scoreSound = new Audio("src/score.wav");
 const scoreSound2 = new Audio("src/score2.wav");
 const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
-const scoreText = document.querySelector("#scoreText");
-const paddle1Color = "lightblue";
-const paddle2Color = "red";
-const paddleBorder = "black";
-const ballColor = "yellow";
 const ballBorderColor = "black";
 const ballRadius = 12.5;
 const paddleSpeed = 50;
+let R;
+let G;
+let B;
+let finalColor;
+let ballColor
 let gameWidth = gameBoard.width;
 let gameHeight = gameBoard.height;
 let pause = true;
@@ -359,7 +303,9 @@ let paddle2 = {
     y: gameHeight - 100
 };
 
-teams.forEach(function (newClub) {
+hitNoScoreSound.volume = 0.3;
+
+Object.keys(nameFlags).forEach(function (newClub) {
     const club = document.createElement("button")
     const classe = document.createElement("style")
 
@@ -412,7 +358,7 @@ function teamPicker() {
         };
 
         switch (name) {
-            case "rd":
+            case "RD":
                 pl = player1IMG
                 randomPicker()
                 break;
@@ -431,7 +377,7 @@ function teamPicker() {
                 break;
         };
         switch (name) {
-            case "rd":
+            case "RD":
                 pl = player2IMG
                 randomPicker()
                 break;
@@ -455,7 +401,7 @@ function teamPicker() {
 };
 
 function randomPicker() {
-    al = (teams[Math.floor(Math.random() * teams.length)])
+    al = (Object.keys(nameFlags)[Math.floor(Math.random() * Object.keys(nameFlags).length)])
     if (al === undefined) {
         randomPicker()
     }
@@ -485,7 +431,7 @@ function userScreenSize() {
         userHeight = window.innerHeight * 0.9
         document.getElementById("line").style.height = userHeight + "px"
         document.body.style = "font-size: x-small;"
-        
+
         switch (canBeMobile) {
             case true:
                 document.getElementById("mobileControls").classList.remove("hidden")
@@ -569,7 +515,6 @@ function nextTick() {
         if (pause == true) {
             return;
         };
-        console.log(ballSpeed)
         clearBoard()
         drawPaddles()
         moveBall()
@@ -586,13 +531,10 @@ function clearBoard() {
 function drawPaddles() {
     ctx.clearRect(0, 0, gameBoard.width, gameBoard.height)
 
-    ctx.strokeStyle = paddleBorder
-
-    ctx.fillStyle = paddle1Color
     ctx.fillRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height)
     ctx.strokeRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height)
 
-    ctx.fillStyle = paddle2Color
+
     ctx.fillRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height)
     ctx.strokeRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height)
 
@@ -712,6 +654,11 @@ function changeDirection(event) {
     const paddle1Down = 83
     const paddle2Up = 38
     const paddle2Down = 40
+    const escapeKey = 27
+
+    if (keyPressed == escapeKey && canBeMobile == true) {
+        pauseGame()
+    }
 
     if (pause == true) {
         return;
@@ -780,10 +727,17 @@ function updateScore() {
 };
 
 function pauseGame() {
-    pause = true
-    document.getElementById("gameContainer").classList.toggle("pausedGame")
-    document.getElementById("pausetBtn").classList.toggle("hidden")
-    document.getElementById("pauseMenu").classList.toggle("hidden")
+    if (pause == false) {
+        pause = true
+        document.getElementById("gameContainer").classList.toggle("pausedGame")
+        document.getElementById("pausetBtn").classList.toggle("hidden")
+        document.getElementById("pauseMenu").classList.toggle("hidden")
+    } else {
+        pause = false
+        document.getElementById("gameContainer").classList.toggle("pausedGame")
+        document.getElementById("pausetBtn").classList.toggle("hidden")
+        document.getElementById("pauseMenu").classList.toggle("hidden")
+    }
 };
 
 function changeDirectionMobile(event) {
@@ -821,6 +775,7 @@ function resetGame() {
     clearInterval(intervalID)
     gameStart()
     userScreenSize()
+    randomColorBall()
 };
 
 function functionsFromMenu(event) {
@@ -828,10 +783,7 @@ function functionsFromMenu(event) {
 
     switch (optionTake) {
         case "CONTINUE": {
-            pause = false
-            document.getElementById("gameContainer").classList.toggle("pausedGame")
-            document.getElementById("pausetBtn").classList.toggle("hidden")
-            document.getElementById("pauseMenu").classList.toggle("hidden")
+            pauseGame()
             break;
         };
         case "RESTART":
@@ -859,6 +811,7 @@ function functionsFromMenu(event) {
                 scoreSound.volume = 0.0
                 scoreSound2.volume = 0.0
                 document.getElementById("soundVolume").textContent = "🔈"
+                document.getElementById("soundVolume").style = "border-color: red;"
             } else {
                 sound = true
                 hitSound.volume = 1
@@ -866,6 +819,7 @@ function functionsFromMenu(event) {
                 scoreSound.volume = 1
                 scoreSound2.volume = 1
                 document.getElementById("soundVolume").textContent = "🔊"
+                document.getElementById("soundVolume").style = "border-color: green;"
             }
             break;
         case "CREDITS":
@@ -876,7 +830,7 @@ function functionsFromMenu(event) {
             document.getElementById("CONTINUE").textContent = "CONTINUAR"
             document.getElementById("RESTART").textContent = "REINICIAR"
             document.getElementById("TEAMS").textContent = "TIMES"
-            document.getElementById("LANGUAGES").textContent = "IDIOMA:"
+            document.getElementById("LANGUAGES").textContent = "IDIOMA: "
             document.getElementById("HELP").textContent = "AJUDA"
             document.getElementById("WALLmode").textContent = "MODO PAREDE"
             document.getElementById("boardColor").textContent = "CAMPO"
@@ -892,7 +846,7 @@ function functionsFromMenu(event) {
             document.getElementById("CONTINUE").textContent = "CONTINUE"
             document.getElementById("RESTART").textContent = "RESTART"
             document.getElementById("TEAMS").textContent = "TEAMS"
-            document.getElementById("LANGUAGES").textContent = "LANGUAGE:"
+            document.getElementById("LANGUAGES").textContent = "LANGUAGE: "
             document.getElementById("HELP").textContent = "HELP"
             document.getElementById("WALLmode").textContent = "WALL MODE"
             document.getElementById("boardColor").textContent = "BOARD"
@@ -949,7 +903,7 @@ switch (userLanguage) {
         document.getElementById("CONTINUE").textContent = "CONTINUAR"
         document.getElementById("RESTART").textContent = "REINICIAR"
         document.getElementById("TEAMS").textContent = "TIMES"
-        document.getElementById("LANGUAGES").textContent = "IDIOMA:"
+        document.getElementById("LANGUAGES").textContent = "IDIOMA: "
         document.getElementById("HELP").textContent = "AJUDA"
         document.getElementById("WALLmode").textContent = "MODO PAREDE"
         document.getElementById("boardColor").textContent = "CAMPO"
@@ -967,7 +921,7 @@ switch (userLanguage) {
         document.getElementById("CONTINUE").textContent = "CONTINUE"
         document.getElementById("RESTART").textContent = "RESTART"
         document.getElementById("TEAMS").textContent = "TEAMS"
-        document.getElementById("LANGUAGES").textContent = "LANGUAGE:"
+        document.getElementById("LANGUAGES").textContent = "LANGUAGE: "
         document.getElementById("HELP").textContent = "HELP"
         document.getElementById("WALLmode").textContent = "WALL MODE"
         document.getElementById("boardColor").textContent = "BOARD"
@@ -978,22 +932,24 @@ switch (userLanguage) {
             "<p>PLAYER 2: Use <strong>ArrowUp</strong> to move up and <strong>ArrowDown</strong> to move down.</p>" +
             "<p>Score points by getting the ball to hit your opponent's wall.</p>" +
             "<p>You can set up virtual buttons for <strong>MOBILE</strong> devices.</p>"
-
         break;
 };
-
-let R = (Math.floor(Math.random() * 256));
-let G = (Math.floor(Math.random() * 256));
-let B = (Math.floor(Math.random() * 256));
-let finalColor = R + "," + G + "," + B;
 
 function randomColors() {
     R = (Math.floor(Math.random() * 256))
     G = (Math.floor(Math.random() * 256))
     B = (Math.floor(Math.random() * 256))
     finalColor = R + "," + G + "," + B
-
     document.getElementById("ranB").style = "background-color: rgb(" + finalColor + ")"
 };
+
+function randomColorBall() {
+    R = (Math.floor(Math.random() * 256))
+    G = (Math.floor(Math.random() * 256))
+    B = (Math.floor(Math.random() * 256))
+    ballColor =  "rgb(" + R + "," + G + "," + B + ")"
+};
+
+randomColorBall()
 
 randomColors();
